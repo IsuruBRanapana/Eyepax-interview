@@ -56,7 +56,7 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
             // textRightPadding: 30.w,
             buttonColor: AppColors.colorPrimary,
             buttonType: ButtonType.SOLID,
-            buttonText: 'Facebook', onTapButton: () {},
+            buttonText: 'Test', onTapButton: () {},
           ),
           SizedBox(
             height: 20.h,

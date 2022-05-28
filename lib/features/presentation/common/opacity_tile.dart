@@ -20,7 +20,7 @@ class _OpacityTileState extends State<OpacityTile> {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(10.h),
         child: Container(
-          color: AppColors.appGrayColor.withOpacity(0.2),
+          color: AppColors.appGrayColor.withOpacity(0.9),
           height: 110.h,
           child: Stack(
             children: [

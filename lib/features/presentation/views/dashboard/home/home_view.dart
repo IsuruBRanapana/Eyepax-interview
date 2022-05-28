@@ -71,7 +71,8 @@ class _HomeViewState extends BaseViewState<HomeView> {
                 const Expanded(child: SizedBox()),
                 InkResponse(
                   onTap: () {
-                    Navigator.pushNamed(context, Routes.SEE_ALL_LATEST_POSTS_VIEW);
+                    Navigator.pushNamed(
+                        context, Routes.SEE_ALL_LATEST_POSTS_VIEW);
                   },
                   child: Container(
                     width: 60.w,
@@ -111,7 +112,10 @@ class _HomeViewState extends BaseViewState<HomeView> {
             items: [1, 2, 3, 4, 5].map((i) {
               return Builder(
                 builder: (BuildContext context) {
-                  return const LatestNewsTile();
+                  return InkWell(
+                      onTap: () =>
+                          Navigator.pushNamed(context, Routes.SINGLE_POST_VIEW),
+                      child: LatestNewsTile());
                 },
               );
             }).toList(),
@@ -153,7 +157,7 @@ class _HomeViewState extends BaseViewState<HomeView> {
           ),
           Container(
             // width: 230.w,
-            height: 110.h*categories.length,
+            height: 110.h * categories.length,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
               itemCount: categories.length,
