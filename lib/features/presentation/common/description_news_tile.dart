@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:readmore/readmore.dart';
 
 ///Created By Isuru B. Ranapana
@@ -17,7 +18,7 @@ class _DescriptionNewsTileState extends State<DescriptionNewsTile> {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(10.h),
-      child: Container(
+      child: SizedBox(
         width: 270.w,
         // height: 300.h,
         child: Column(
@@ -25,7 +26,7 @@ class _DescriptionNewsTileState extends State<DescriptionNewsTile> {
           children: [
             ClipRRect(
               borderRadius: BorderRadius.circular(10.h),
-              child: Container(
+              child: SizedBox(
                 width: 270.w,
                 height: 100.h,
                 child: Image.network(
@@ -34,57 +35,63 @@ class _DescriptionNewsTileState extends State<DescriptionNewsTile> {
                 ),
               ),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
                 "Sunday, 29 May 2022",
-                style:
-                TextStyle(fontSize: 8.sp),
+                style: TextStyle(fontSize: 8.sp),
               ),
             ),
-            SizedBox(height: 5.h,),
+            SizedBox(
+              height: 5.h,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Container(
+              child: SizedBox(
                   width: 240.w,
                   height: 30.h,
                   child: Text(
-                    "by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Iuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana v",
-                    style: TextStyle(
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.bold),
+                    "by Isuru Ranapana by Isuru Ranapana by ",
+                    style:
+                        TextStyle(fontSize: 12.sp, fontWeight: FontWeight.bold),
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                   )),
             ),
-            SizedBox(height: 5.h,),
+            SizedBox(
+              height: 5.h,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
-              child: Container(
+              child: SizedBox(
                   width: 240.w,
                   // height: 70.h,
-                  child: ReadMoreText(
+                  child: const ReadMoreText(
                     'Flutter is Google’s mobile UI open source framework to build high-quality native (super fast) interfaces for iOS and Android apps with the unified codebase. by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Iuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana v',
                     trimLines: 5,
-                    colorClickableText: Colors.pink,
+                    colorClickableText: AppColors.colorSecondary,
                     trimMode: TrimMode.Line,
-                    trimCollapsedText: '...Show more',
-                    trimExpandedText: ' show less',
+                    trimCollapsedText: '...Read More',
+                    trimExpandedText: ' Read Less',
                     style: TextStyle(color: Colors.black),
-                  )
-                  ),
+                  )),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
             Padding(
               padding: EdgeInsets.only(left: 5.w, right: 5.w),
               child: Text(
                 "Published by Isuru",
-                style:
-                TextStyle(fontSize: 8.sp,fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 8.sp, fontWeight: FontWeight.bold),
               ),
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(
+              height: 10.h,
+            ),
           ],
         ),
       ),

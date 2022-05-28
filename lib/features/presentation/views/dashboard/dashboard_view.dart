@@ -61,117 +61,114 @@ class _DashboardViewState extends State<DashboardView>
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        body: Padding(
-          padding: EdgeInsets.only(bottom: 0),
-          child: BottomBar(
-            fit: StackFit.expand,
-            icon: const Center(
-              child: IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: null,
-                icon: Icon(
-                  Icons.arrow_upward_rounded,
-                  color: AppColors.colorPrimary,
-                ),
+        body: BottomBar(
+          fit: StackFit.expand,
+          icon: const Center(
+            child: IconButton(
+              padding: EdgeInsets.zero,
+              onPressed: null,
+              icon: Icon(
+                Icons.arrow_upward_rounded,
+                color: AppColors.colorPrimary,
               ),
             ),
-            borderRadius: BorderRadius.circular(500),
-            duration: const Duration(seconds: 1),
-            curve: Curves.decelerate,
-            showIcon: true,
-            width: MediaQuery.of(context).size.width * 0.7,
-            barColor: AppColors.appColorWhite,
-            start: 10,
-            end: 5,
-            bottom: 30.h,
-            alignment: Alignment.bottomCenter,
-            iconHeight: 35,
-            iconWidth: 35,
-            reverse: false,
-            hideOnScroll: true,
-            scrollOpposite: false,
-            onBottomBarHidden: () {},
-            onBottomBarShown: () {},
-            body: (context, controller) => TabBarView(
-                controller: tabController,
-                dragStartBehavior: DragStartBehavior.down,
-                physics: const BouncingScrollPhysics(),
-                children: [
-                  HomeView(controller: controller),
-                  FavouriteView(controller: controller),
-                  ProfileView(controller: controller)
-                ]),
-            child: TabBar(
-              indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 40),
+          ),
+          borderRadius: BorderRadius.circular(500),
+          duration: const Duration(seconds: 1),
+          curve: Curves.decelerate,
+          showIcon: true,
+          width: MediaQuery.of(context).size.width * 0.7,
+          barColor: AppColors.appColorWhite,
+          start: 2,
+          end: 0,
+          bottom: 30.h,
+          alignment: Alignment.bottomCenter,
+          iconHeight: 35,
+          iconWidth: 35,
+          reverse: false,
+          hideOnScroll: true,
+          scrollOpposite: false,
+          onBottomBarHidden: () {},
+          onBottomBarShown: () {},
+          body: (context, controller) => TabBarView(
               controller: tabController,
-              indicator: const UnderlineTabIndicator(
-                  borderSide: BorderSide(
-                      color: AppColors.colorPrimary,
-                      width: 4),
-                  insets: EdgeInsets.fromLTRB(16, 0, 16, 8)),
-              tabs: [
-                SizedBox(
-                  height: 40.h,
-                  width: 40.w,
-                  child: Center(
-                      child: Padding(
-                    padding: EdgeInsets.only(top: 8.h),
-                    child: Column(
-                      children: [
-                        Icon(
-                          Icons.home_outlined,
-                          color: currentPage == 0 ? AppColors.colorPrimary : AppColors.appGrayColor,
-                        ),
-                        Text(
-                          "Home",
-                          style: TextStyle(color: currentPage == 0 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
-                        )
-                      ],
-                    ),
-                  )),
-                ),
-                SizedBox(
-                  height: 40.h,
-                  width: 40.w,
-                  child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 8.h),
-                        child: Column(
-                          children: [
-                            Icon(
-                    Icons.favorite_border,
-                    color: currentPage == 1 ? AppColors.colorPrimary : AppColors.appGrayColor,
+              dragStartBehavior: DragStartBehavior.down,
+              physics: const BouncingScrollPhysics(),
+              children: [
+                HomeView(controller: controller),
+                FavouriteView(controller: controller),
+                ProfileView(controller: controller)
+              ]),
+          child: TabBar(
+            indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 40),
+            controller: tabController,
+            indicator: const UnderlineTabIndicator(
+                borderSide: BorderSide(
+                    color: AppColors.colorPrimary,
+                    width: 4),
+                insets: EdgeInsets.fromLTRB(16, 0, 16, 8)),
+            tabs: [
+              SizedBox(
+                height: 40.h,
+                width: 40.w,
+                child: Center(
+                    child: Padding(
+                  padding: EdgeInsets.only(top: 8.h),
+                  child: Column(
+                    children: [
+                      Icon(
+                        Icons.home_outlined,
+                        color: currentPage == 0 ? AppColors.colorPrimary : AppColors.appGrayColor,
+                      ),
+                      Text(
+                        "Home",
+                        style: TextStyle(color: currentPage == 0 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
+                      )
+                    ],
                   ),
-                            Text(
-                              "Favourite",
-                              style: TextStyle(color: currentPage == 1 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
-                            )
-                          ],
-                        ),
-                      )),
+                )),
+              ),
+              SizedBox(
+                height: 40.h,
+                width: 40.w,
+                child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: Column(
+                        children: [
+                          Icon(
+                  Icons.favorite_border,
+                  color: currentPage == 1 ? AppColors.colorPrimary : AppColors.appGrayColor,
                 ),
-                SizedBox(
-                  height: 40.h,
-                  width: 40.w,
-                  child: Center(
-                      child: Padding(
-                        padding: EdgeInsets.only(top: 8.h),
-                        child: Column(
-                          children: [
-                            Icon(
-                              Icons.insert_emoticon,
-                              color: currentPage == 2 ? AppColors.colorPrimary : AppColors.appGrayColor,
-                            ),
-                            Text(
-                              "Profile",
-                              style: TextStyle(color: currentPage == 2 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
-                            )
-                          ],
-                        ),
-                      )),
-                ),
-              ],
-            ),
+                          Text(
+                            "Favourite",
+                            style: TextStyle(color: currentPage == 1 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+              SizedBox(
+                height: 40.h,
+                width: 40.w,
+                child: Center(
+                    child: Padding(
+                      padding: EdgeInsets.only(top: 8.h),
+                      child: Column(
+                        children: [
+                          Icon(
+                            Icons.insert_emoticon,
+                            color: currentPage == 2 ? AppColors.colorPrimary : AppColors.appGrayColor,
+                          ),
+                          Text(
+                            "Profile",
+                            style: TextStyle(color: currentPage == 2 ? AppColors.colorPrimary : AppColors.appGrayColor,fontSize: 8.sp),
+                          )
+                        ],
+                      ),
+                    )),
+              ),
+            ],
           ),
         ),
       ),

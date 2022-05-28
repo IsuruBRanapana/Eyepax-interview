@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/services/dependency_injection.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/core/util/enums.dart';
+import 'package:news_app_eyepax_practical/core/util/navigation_routes.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/common/category.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
@@ -35,11 +36,11 @@ class HomeView extends BaseView {
 class _HomeViewState extends BaseViewState<HomeView> {
   var bloc = injection<HomeBloc>();
   List<CategoryEntity> categories = [
-    CategoryEntity(name: "Health", id: 1),
-    CategoryEntity(name: "Technology", id: 2),
-    CategoryEntity(name: "Art", id: 3),
-    CategoryEntity(name: "Finance", id: 4),
-    CategoryEntity(name: "Politics", id: 5)
+    const CategoryEntity(name: "Health", id: 1),
+    const CategoryEntity(name: "Technology", id: 2),
+    const CategoryEntity(name: "Art", id: 3),
+    const CategoryEntity(name: "Finance", id: 4),
+    const CategoryEntity(name: "Politics", id: 5)
   ];
 
   int selectedBtnIndex = 1;
@@ -50,7 +51,7 @@ class _HomeViewState extends BaseViewState<HomeView> {
       padding: EdgeInsets.only(left: 10.w, right: 10.w),
       child: ListView(
         controller: widget.controller,
-        physics: ClampingScrollPhysics(),
+        physics: const ClampingScrollPhysics(),
         children: [
           Container(
             height: 30.h,
@@ -67,9 +68,11 @@ class _HomeViewState extends BaseViewState<HomeView> {
                     fontSize: 16.sp,
                   ),
                 ),
-                Expanded(child: SizedBox()),
+                const Expanded(child: SizedBox()),
                 InkResponse(
-                  onTap: () {},
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.SEE_ALL_LATEST_POSTS_VIEW);
+                  },
                   child: Container(
                     width: 60.w,
                     child: Row(
@@ -108,7 +111,7 @@ class _HomeViewState extends BaseViewState<HomeView> {
             items: [1, 2, 3, 4, 5].map((i) {
               return Builder(
                 builder: (BuildContext context) {
-                  return LatestNewsTile();
+                  return const LatestNewsTile();
                 },
               );
             }).toList(),
@@ -152,12 +155,12 @@ class _HomeViewState extends BaseViewState<HomeView> {
             // width: 230.w,
             height: 110.h*categories.length,
             child: ListView.builder(
-              physics: NeverScrollableScrollPhysics(),
+              physics: const NeverScrollableScrollPhysics(),
               itemCount: categories.length,
               itemBuilder: (context, index) => Container(
                 width: 65.w,
                 padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
-                child: NormalNewsTile(),
+                child: const NormalNewsTile(),
               ),
             ),
           ),
