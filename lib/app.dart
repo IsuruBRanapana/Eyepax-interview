@@ -17,7 +17,7 @@ class _AppState extends State<App> {
       designSize: const Size(288, 624),
       minTextAdapt: true,
       builder: (_, child) => MaterialApp(
-        initialRoute: Routes.HOME_VIEW,
+        initialRoute: Routes.DASHBOARD_VIEW,
         title: F.title,
         onGenerateRoute: Routes.generateRoute,
         theme: ThemeData(

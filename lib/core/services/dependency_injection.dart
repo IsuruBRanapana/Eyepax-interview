@@ -6,6 +6,7 @@ import 'package:news_app_eyepax_practical/features/data/datasources/local_data_s
 import 'package:news_app_eyepax_practical/features/data/datasources/remote_data_source.dart';
 import 'package:news_app_eyepax_practical/features/data/repositories/repository_impl.dart';
 import 'package:news_app_eyepax_practical/features/domain/repository/repository.dart';
+import 'package:news_app_eyepax_practical/features/presentation/bloc/home/home_bloc.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-27 22:50
@@ -34,4 +35,6 @@ Future<void> setupLocator() async {
   injection.registerLazySingleton<LocalDataSource>(
         () => LocalDataSourceImpl(),
   );
+  injection.registerFactory(
+          () => HomeBloc(),);
 }
