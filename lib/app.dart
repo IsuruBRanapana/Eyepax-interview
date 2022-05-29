@@ -17,6 +17,7 @@ class _AppState extends State<App> {
       designSize: const Size(288, 624),
       minTextAdapt: true,
       builder: (_, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         initialRoute: Routes.SPLASH_VIEW,
         title: F.title,
         onGenerateRoute: Routes.generateRoute,
