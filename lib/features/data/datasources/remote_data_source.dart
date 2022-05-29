@@ -34,7 +34,6 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   Future<NewsResponseModel> getTopNews() async {
     try {
       final response = await apiHelper.getWithQParam('top-headlines', {
-        //todo: change country according to location
         "country": "us",
         "apiKey": NetworkConfig.APIKey
       });

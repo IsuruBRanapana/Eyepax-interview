@@ -30,7 +30,7 @@ class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
     }else if(event is GetTopNewsEvent) {
       yield APILoadingState();
       final failureOrSuccess =
-      await getAllNewsUsaCase(NoParams());
+      await getTopNewsUsaCase(NoParams());
       yield* _eitherFailureOrSuccessGetTopEvent(failureOrSuccess);
     }
   }

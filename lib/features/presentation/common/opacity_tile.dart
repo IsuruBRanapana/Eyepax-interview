@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-28 19:51
 
 class OpacityTile extends StatefulWidget {
-  const OpacityTile({Key? key}) : super(key: key);
+  const OpacityTile({Key? key, required this.news}) : super(key: key);
+  final Article news;
 
   @override
   _OpacityTileState createState() => _OpacityTileState();
@@ -32,7 +34,7 @@ class _OpacityTileState extends State<OpacityTile> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "by Isuru Ranapana",
+                    widget.news.publishedAt!=null?widget.news.publishedAt!.toIso8601String():"",
                           style: TextStyle(fontSize: 8.sp),
                         ),
                         SizedBox(
@@ -41,7 +43,7 @@ class _OpacityTileState extends State<OpacityTile> {
                         Container(
                             width: 180.w,
                             child: Text(
-                              "by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Iuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana v",
+                              widget.news.content!=null?widget.news.content!:"",
                               style:
                               TextStyle(fontSize: 14.sp,fontWeight: FontWeight.bold),
                               maxLines: 3,
@@ -51,7 +53,7 @@ class _OpacityTileState extends State<OpacityTile> {
                           height: 10.h,
                         ),
                         Text(
-                          "by Isuru Ranapana",
+                          widget.news.author!=null?"Published by ${widget.news.author!}":"",
                           style: TextStyle(fontSize: 9.sp,fontWeight: FontWeight.bold),
                         ),
                       ],

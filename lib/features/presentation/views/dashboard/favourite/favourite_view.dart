@@ -47,7 +47,7 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
           SizedBox(
             height: 20.h,
           ),
-          DescriptionNewsTile(),
+          // DescriptionNewsTile(),
           SizedBox(
             height: 20.h,
           ),
@@ -61,7 +61,7 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
           SizedBox(
             height: 20.h,
           ),
-          Container(width: 180.w, child: OpacityTile()),
+          // Container(width: 180.w, child: OpacityTile()),
           SizedBox(
             height: 20.h,
           ),

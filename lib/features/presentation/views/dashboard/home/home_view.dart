@@ -42,6 +42,7 @@ class HomeView extends BaseView {
 }
 
 class _HomeViewState extends BaseViewState<HomeView> {
+  TextEditingController searchController = TextEditingController();
   @override
   void initState() {
     super.initState();
@@ -68,6 +69,47 @@ class _HomeViewState extends BaseViewState<HomeView> {
         children: [
           Container(
             height: 30.h,
+            child: Row(
+              children: [
+                Container(
+                  width:220.w,
+                  child: TextField(
+                    textInputAction: TextInputAction.done,
+                    style: const TextStyle(
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    controller: searchController,
+                    decoration: InputDecoration(
+                        contentPadding: const EdgeInsets.all(16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: const BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                            color: AppColors.colorSecondary,
+                          ),
+                        ),
+                        filled: true,
+                      suffix: InkResponse(
+                        child: Icon(
+                          Icons.search,
+                          color: AppColors.appGrayColor,
+                          size: 15.w,
+                        ),
+                      )
+                    ),
+
+                  ),
+                ),
+                Container(
+                  child: Icon(
+                    Icons.notifications_outlined,
+                    size: 15,
+                  ),
+                )
+              ],
+            ),
           ),
           Container(
             height: 40.h,
@@ -85,7 +127,7 @@ class _HomeViewState extends BaseViewState<HomeView> {
                 InkResponse(
                   onTap: () {
                     Navigator.pushNamed(
-                        context, Routes.SEE_ALL_LATEST_POSTS_VIEW);
+                        context, Routes.SEE_ALL_LATEST_POSTS_VIEW,arguments: widget.news);
                   },
                   child: Container(
                     width: 60.w,
@@ -127,7 +169,7 @@ class _HomeViewState extends BaseViewState<HomeView> {
                 builder: (BuildContext context) {
                   return InkWell(
                       onTap: () =>
-                          Navigator.pushNamed(context, Routes.SINGLE_POST_VIEW),
+                          Navigator.pushNamed(context, Routes.SINGLE_POST_VIEW,arguments: i),
                       child: LatestNewsTile(news: i,));
                 },
               );
@@ -177,11 +219,16 @@ class _HomeViewState extends BaseViewState<HomeView> {
               physics: const NeverScrollableScrollPhysics(),
               itemCount: widget.news.articles.length,
               itemBuilder: (context, index) =>
-                  Container(
-                    width: 65.w,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: 2.w, vertical: 5.h),
-                    child: NormalNewsTile(news:widget.news.articles[index]),
+                  InkWell(
+                    onTap: (){
+                      Navigator.pushNamed(context, Routes.SINGLE_POST_VIEW,arguments: widget.news.articles[index]);
+                    },
+                    child: Container(
+                      width: 65.w,
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 2.w, vertical: 5.h),
+                      child: NormalNewsTile(news:widget.news.articles[index]),
+                    ),
                   ),
             ),
           ):SizedBox(),

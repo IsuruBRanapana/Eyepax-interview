@@ -46,7 +46,6 @@ class ApiHelper {
 
   Future<Response> get(String url) async {
     try {
-      dio.interceptors.clear();
       String methodUrl = baseUrl + url;
       Response response = await dio.get(methodUrl,
           options: Options(headers: {
@@ -85,10 +84,11 @@ class ApiHelper {
   }
 
   Future<Response> getWithQParam(String url,Map<String, dynamic>? queryParameters) async {
+    String queryString = Uri(queryParameters: queryParameters).query;
     try {
-      String methodUrl = baseUrl + url;
-      Response response = await dio.get(methodUrl,
-          queryParameters: queryParameters,
+      String methodUrl = baseUrl + url + '?' + queryString;
+      print(methodUrl);
+      Response response = await dio.get('$methodUrl',
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: "application/json",
           }));

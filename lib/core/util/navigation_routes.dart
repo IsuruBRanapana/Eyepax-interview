@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/Splash_view/splash_view.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/dashboard/dashboard_view.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/login/login_view.dart';
@@ -30,10 +31,10 @@ class Routes {
             child: DashboardView(), type: PageTransitionType.fade);
       case Routes.SEE_ALL_LATEST_POSTS_VIEW:
         return PageTransition(
-            child: SeeAllLatestNewsPage(), type: PageTransitionType.fade);
+            child: SeeAllLatestNewsPage(news: settings.arguments as NewsResponse,), type: PageTransitionType.fade);
       case Routes.SINGLE_POST_VIEW:
         return PageTransition(
-            child: SinglePostViewPage(), type: PageTransitionType.fade);
+            child: SinglePostViewPage(news: settings.arguments as Article,), type: PageTransitionType.fade);
       case Routes.SPLASH_VIEW:
         return PageTransition(
             child: SplashView(), type: PageTransitionType.fade);
