@@ -30,11 +30,12 @@ class _LoginViewState extends BaseViewState<LoginView> {
   var bloc = injection<AuthBloc>();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
+  GlobalKey<FormState> formKey = GlobalKey<FormState>();
 
   @override
   Widget buildView(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.colorPrimary,
+      backgroundColor: AppColors.colorSecondary,
       body: BlocProvider<AuthBloc>(
         create: (_) => bloc,
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
@@ -47,87 +48,94 @@ class _LoginViewState extends BaseViewState<LoginView> {
               }
             }
           },
-          child: Stack(
-            alignment: Alignment.topCenter,
-            children: [
-              Positioned(
-                top: 120.h,
-                child: Text(
-                  "NEWS",
-                  style: TextStyle(
-                      fontSize: 25.sp, color: AppColors.appColorWhite),
-                ),
-              ),
-              Positioned(
-                top: 170.h,
-                child: Text(
-                  "Log In",
-                  style: TextStyle(
-                      fontSize: 18.sp,
-                      color: AppColors.appColorWhite,
-                      fontWeight: FontWeight.bold),
-                ),
-              ),
-              Positioned(
-                top: 220.h,
-                child: SizedBox(
-                  width: 240.w,
-                  height: 80.h,
-                  child: CommonAppTextField(
-                    label: "Email Address",
-                    controller: _emailController,
-                    hint: "Enter Email Address",
+          child: Form(
+            key: formKey,
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: [
+                Positioned(
+                  top: 120.h,
+                  child: Text(
+                    "NEWS",
+                    style: TextStyle(
+                        fontSize: 25.sp, color: AppColors.appColorWhite),
                   ),
                 ),
-              ),
-              Positioned(
-                top: 280.h,
-                child: SizedBox(
-                  width: 240.w,
-                  height: 80.h,
-                  child: CommonAppTextField(
-                    isObscure: true,
-                    label: "Password",
-                    controller: _passwordController,
-                    hint: "Enter the Password",
+                Positioned(
+                  top: 170.h,
+                  child: Text(
+                    "Log In",
+                    style: TextStyle(
+                        fontSize: 18.sp,
+                        color: AppColors.appColorWhite,
+                        fontWeight: FontWeight.bold),
                   ),
                 ),
-              ),
-              Positioned(
-                top: 360.h,
-                child: AppButton(
-                  width: 240.w,
-                  // textRightPadding: 30.w,
-                  buttonColor: AppColors.appColorWhite,
-                  textColor: AppColors.colorPrimary,
-                  buttonType: ButtonType.SOLID,
-                  buttonText: 'Login',
-                  onTapButton: () {
-                    bloc.add(LoginEvent(
-                        request: LoginRequestEntity(
-                            email: _emailController.text,
-                            password: _passwordController.text)));
-                  },
+                Positioned(
+                  top: 220.h,
+                  child: SizedBox(
+                    width: 240.w,
+                    height: 80.h,
+                    child: CommonAppTextField(
+                      validationType: ValidationType.EMAIL,
+                      label: "Email Address",
+                      controller: _emailController,
+                      hint: "Enter Email Address",
+                    ),
+                  ),
                 ),
-              ),
-              Positioned(
-                top: 480.h,
-                child: Text.rich(TextSpan(
-                    text: "Don't you have an account ?",
-                    style: TextStyle(fontSize: 14.sp),
-                    children: <InlineSpan>[
-                      TextSpan(
-                        recognizer: TapGestureRecognizer()
-                          ..onTap = () {
-                            Navigator.pushNamed(context, Routes.SIGN_UP_VIEW);
-                          },
-                        text: " Sign Up",
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 14.sp),
-                      )
-                    ])),
-              ),
-            ],
+                Positioned(
+                  top: 280.h,
+                  child: SizedBox(
+                    width: 240.w,
+                    height: 80.h,
+                    child: CommonAppTextField(
+                      validationType: ValidationType.PW,
+                      isObscure: true,
+                      label: "Password",
+                      controller: _passwordController,
+                      hint: "Enter the Password",
+                    ),
+                  ),
+                ),
+                Positioned(
+                  top: 360.h,
+                  child: AppButton(
+                    width: 240.w,
+                    // textRightPadding: 30.w,
+                    buttonColor: AppColors.appColorWhite,
+                    textColor: AppColors.colorPrimary,
+                    buttonType: ButtonType.SOLID,
+                    buttonText: 'Login',
+                    onTapButton: () {
+                      if (formKey.currentState!.validate()) {
+                        bloc.add(LoginEvent(
+                            request: LoginRequestEntity(
+                                email: _emailController.text,
+                                password: _passwordController.text)));
+                      }
+                    },
+                  ),
+                ),
+                Positioned(
+                  top: 480.h,
+                  child: Text.rich(TextSpan(
+                      text: "Don't you have an account ?",
+                      style: TextStyle(fontSize: 14.sp),
+                      children: <InlineSpan>[
+                        TextSpan(
+                          recognizer: TapGestureRecognizer()
+                            ..onTap = () {
+                              Navigator.pushNamed(context, Routes.SIGN_UP_VIEW);
+                            },
+                          text: " Sign Up",
+                          style: TextStyle(
+                              fontWeight: FontWeight.bold, fontSize: 14.sp),
+                        )
+                      ])),
+                ),
+              ],
+            ),
           ),
         ),
       ),
