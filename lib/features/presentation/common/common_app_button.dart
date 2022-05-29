@@ -22,20 +22,21 @@ class AppButton extends StatefulWidget {
   final bool isTextPadding;
   final bool isTextBold;
 
-
   AppButton(
-      {
-        required this.buttonText,
-        required this.onTapButton,
-        this.width = 0,
-        this.prefixIcon,
-        this.enableBorder = false,
-        this.buttonColor = AppColors.colorPrimary,
-        this.textColor = AppColors.appColorWhite,
-        this.buttonStatus = ButtonStatus.ENABLED,
-        this.buttonType = ButtonType.SOLID,
-        this.textLeftPadding=0,
-        this.textRightPadding=0, this.fontSize=16, this.isTextPadding=true, this.isTextBold = true});
+      {required this.buttonText,
+      required this.onTapButton,
+      this.width = 0,
+      this.prefixIcon,
+      this.enableBorder = false,
+      this.buttonColor = AppColors.colorPrimary,
+      this.textColor = AppColors.appColorWhite,
+      this.buttonStatus = ButtonStatus.ENABLED,
+      this.buttonType = ButtonType.SOLID,
+      this.textLeftPadding = 0,
+      this.textRightPadding = 0,
+      this.fontSize = 16,
+      this.isTextPadding = true,
+      this.isTextBold = true});
 
   @override
   State<AppButton> createState() => _AppButtonState();
@@ -48,21 +49,23 @@ class _AppButtonState extends State<AppButton> {
       highlightColor: Colors.transparent,
       splashColor: Colors.transparent,
       child: Container(
-        padding: widget.isTextPadding?EdgeInsets.symmetric(vertical: 14.h):EdgeInsets.symmetric(vertical: 0),
+        padding: widget.isTextPadding
+            ? EdgeInsets.symmetric(vertical: 14.h)
+            : EdgeInsets.symmetric(vertical: 0),
         width: widget.width == 0 ? 30.w : widget.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(50.h)),
           color: widget.buttonType == ButtonType.OUTLINE
               ? AppColors.colorPrimary
               : widget.buttonStatus == ButtonStatus.ENABLED
-              ? widget.buttonColor
-              : widget.buttonColor.withAlpha(150),
+                  ? widget.buttonColor
+                  : widget.buttonColor.withAlpha(150),
           border: Border.all(
               color: widget.buttonType == ButtonType.OUTLINE
                   ? AppColors.appBorderColor
                   : widget.enableBorder
-                  ? AppColors.appBorderColor
-                  : widget.buttonColor,
+                      ? AppColors.appBorderColor
+                      : widget.buttonColor,
               width: 2),
           boxShadow: [
             BoxShadow(
@@ -81,12 +84,14 @@ class _AppButtonState extends State<AppButton> {
               widget.prefixIcon ?? const SizedBox.shrink(),
               widget.prefixIcon != null
                   ? SizedBox(
-                width: 5.w,
-              )
+                      width: 5.w,
+                    )
                   : const SizedBox.shrink(),
               Expanded(
                 child: Padding(
-                  padding: EdgeInsets.only(right: widget.textRightPadding,left: widget.textLeftPadding),
+                  padding: EdgeInsets.only(
+                      right: widget.textRightPadding,
+                      left: widget.textLeftPadding),
                   child: Center(
                     child: Text(
                       widget.buttonText,
@@ -94,7 +99,9 @@ class _AppButtonState extends State<AppButton> {
                           color: widget.buttonStatus == ButtonStatus.ENABLED
                               ? widget.textColor
                               : widget.textColor.withAlpha(180),
-                          fontWeight: widget.isTextBold?FontWeight.bold:FontWeight.normal,
+                          fontWeight: widget.isTextBold
+                              ? FontWeight.bold
+                              : FontWeight.normal,
                           fontSize: widget.fontSize),
                     ),
                   ),

@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/services/dependency_injection.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_event.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_state.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
@@ -27,10 +26,7 @@ class _SplashViewState extends BaseViewState<SplashView> {
 
   @override
   void initState() {
-    Timer(const Duration(seconds: 2), () {
-      Navigator.pushNamedAndRemoveUntil(
-          context, Routes.LOGIN_VIEW, (route) => false);
-    });
+    bloc.add(GetLoggedUserEvent());
     super.initState();
   }
 
@@ -42,11 +38,21 @@ class _SplashViewState extends BaseViewState<SplashView> {
         create: (_) => bloc,
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
-          listener: (_, state){
-
+          listener: (_, state) {
+            if (state is GetLoggedUserSuccessState) {
+              if (state.responseEntity.success == 'success') {
+                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,
+                    arguments: state.responseEntity);
+              }
+            } else {
+              Navigator.pushNamed(context, Routes.LOGIN_VIEW);
+            }
           },
           child: Center(
-            child: Text("NEWS",style: TextStyle(fontSize: 25.sp,color: AppColors.appColorWhite),),
+            child: Text(
+              "NEWS",
+              style: TextStyle(fontSize: 25.sp, color: AppColors.appColorWhite),
+            ),
           ),
         ),
       ),
@@ -55,8 +61,6 @@ class _SplashViewState extends BaseViewState<SplashView> {
 
   @override
   Base<BaseEvent, BaseState> getBloc() {
-  return bloc;
+    return bloc;
   }
-
-
 }

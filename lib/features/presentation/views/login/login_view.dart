@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/services/dependency_injection.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/core/util/enums.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/request/login_request_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_state.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
@@ -15,6 +16,7 @@ import 'package:news_app_eyepax_practical/features/presentation/common/common_ap
 import 'package:news_app_eyepax_practical/features/presentation/views/base_view.dart';
 
 import '../../../../core/util/navigation_routes.dart';
+import '../../bloc/auth/auth_event.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-29 00:33
@@ -37,7 +39,14 @@ class _LoginViewState extends BaseViewState<LoginView> {
         create: (_) => bloc,
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
-          listener: (_, state) {},
+          listener: (_, state) {
+            if (state is LoginSuccessState) {
+              if (state.responseEntity.success == 'success') {
+                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,
+                    arguments: state.responseEntity);
+              }
+            }
+          },
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -54,7 +63,9 @@ class _LoginViewState extends BaseViewState<LoginView> {
                 child: Text(
                   "Log In",
                   style: TextStyle(
-                      fontSize: 18.sp, color: AppColors.appColorWhite,fontWeight: FontWeight.bold),
+                      fontSize: 18.sp,
+                      color: AppColors.appColorWhite,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Positioned(
@@ -82,16 +93,25 @@ class _LoginViewState extends BaseViewState<LoginView> {
                   ),
                 ),
               ),
-              Positioned(top: 360.h,child: AppButton(
-                width: 240.w,
-                // textRightPadding: 30.w,
-                buttonColor: AppColors.appColorWhite,
-                textColor: AppColors.colorPrimary,
-                buttonType: ButtonType.SOLID,
-                buttonText: 'Login', onTapButton: () {},
-              ),),
               Positioned(
-                  top: 480.h,
+                top: 360.h,
+                child: AppButton(
+                  width: 240.w,
+                  // textRightPadding: 30.w,
+                  buttonColor: AppColors.appColorWhite,
+                  textColor: AppColors.colorPrimary,
+                  buttonType: ButtonType.SOLID,
+                  buttonText: 'Login',
+                  onTapButton: () {
+                    bloc.add(LoginEvent(
+                        request: LoginRequestEntity(
+                            email: _emailController.text,
+                            password: _passwordController.text)));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 480.h,
                 child: Text.rich(TextSpan(
                     text: "Don't you have an account ?",
                     style: TextStyle(fontSize: 14.sp),
@@ -99,11 +119,11 @@ class _LoginViewState extends BaseViewState<LoginView> {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(
-                                context, Routes.SIGN_UP_VIEW);
+                            Navigator.pushNamed(context, Routes.SIGN_UP_VIEW);
                           },
                         text: " Sign Up",
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14.sp),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.sp),
                       )
                     ])),
               ),

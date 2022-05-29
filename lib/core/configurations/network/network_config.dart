@@ -17,6 +17,7 @@ class ContextRoot {
   static const String DEV = 'v2/';
   static const String LIVE = 'v2/';
 }
+
 class NetworkConfig {
   static String getNetworkUrl() {
     String url = _getProtocol() + _getIP() + _getContextRoot();
@@ -46,4 +47,6 @@ class NetworkConfig {
       return IPAddress.LIVE;
     }
   }
+
+  static const String APIKey = 'b457f9164bd24047bd2d9920f456c593';
 }

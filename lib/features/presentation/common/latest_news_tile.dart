@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-28 17:03
 
 class LatestNewsTile extends StatefulWidget {
-  const LatestNewsTile({Key? key}) : super(key: key);
+  LatestNewsTile({Key? key, required this.news}) : super(key: key);
+  final Article news;
 
   @override
   _LatestNewsTileState createState() => _LatestNewsTileState();
@@ -26,10 +29,9 @@ class _LatestNewsTileState extends State<LatestNewsTile> {
               child: Container(
                 width: 230.w,
                 height: 180.h,
-                child: Image.network(
-                  'https://scx2.b-cdn.net/gfx/news/2022/elon-musk-has-clashed.jpg',
+                child: widget.news.urlToImage!=null?Image.network(widget.news.urlToImage!,
                   fit: BoxFit.cover,
-                ),
+                ):Image.network('https://scx2.b-cdn.net/gfx/news/2022/elon-musk-has-clashed.jpg',fit: BoxFit.cover,),
               ),
             ),
             Positioned(
@@ -40,7 +42,7 @@ class _LatestNewsTileState extends State<LatestNewsTile> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "by Isuru Ranapana",
+                        widget.news.author!=null?"by ${widget.news.author!}":"",
                         style: TextStyle(color: Colors.white, fontSize: 10.sp,fontWeight: FontWeight.bold),
                       ),
                       SizedBox(
@@ -49,7 +51,7 @@ class _LatestNewsTileState extends State<LatestNewsTile> {
                       Container(
                           width: 200.w,
                           child: Text(
-                            "by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Iuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana v",
+                            widget.news.content!=null?widget.news.content!:"",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 14.sp,fontWeight: FontWeight.bold),
                             maxLines: 3,
@@ -67,7 +69,7 @@ class _LatestNewsTileState extends State<LatestNewsTile> {
                       Container(
                           width: 200.w,
                           child: Text(
-                            "by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana",
+                            widget.news.description!=null?widget.news.description!:"",
                             style:
                                 TextStyle(color: Colors.white, fontSize: 8.sp),
                             maxLines: 2,
