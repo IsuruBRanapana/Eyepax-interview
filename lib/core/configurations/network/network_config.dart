@@ -46,4 +46,6 @@ class NetworkConfig {
       return IPAddress.LIVE;
     }
   }
+
+  static const String APIKey = 'b457f9164bd24047bd2d9920f456c593';
 }

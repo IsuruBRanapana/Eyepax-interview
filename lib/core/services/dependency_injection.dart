@@ -1,3 +1,4 @@
+import 'package:connectivity_checker/connectivity_checker.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:news_app_eyepax_practical/core/configurations/network/api_helper.dart';
@@ -6,6 +7,7 @@ import 'package:news_app_eyepax_practical/features/data/datasources/local_data_s
 import 'package:news_app_eyepax_practical/features/data/datasources/remote_data_source.dart';
 import 'package:news_app_eyepax_practical/features/data/repositories/repository_impl.dart';
 import 'package:news_app_eyepax_practical/features/domain/repository/repository.dart';
+import 'package:news_app_eyepax_practical/features/domain/usecases/get_all_news_use_case.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_login_use_case.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/home/home_bloc.dart';
@@ -23,6 +25,8 @@ Future<void> setupLocator() async {
           () => ApiHelper());
   injection
       .registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(injection()));
+  injection
+      .registerLazySingleton(() => ConnectivityWrapper.instance);
 
   ///Repository
   injection.registerLazySingleton<Repository>(
@@ -31,7 +35,10 @@ Future<void> setupLocator() async {
         localDataSource: injection(),
         networkInfo: injection()),
   );
-
+  ///Use cases
+  injection.registerLazySingleton(() => GetLoginUseCase(injection()));
+  injection.registerLazySingleton(() => GetSignUpUseCase(injection()));
+  injection.registerLazySingleton(() => GetAllNewsUsaCase(injection()));
   ///Data sources
   injection.registerLazySingleton<RemoteDataSource>(
         () => RemoteDataSourceImpl(apiHelper: injection()),
@@ -40,11 +47,9 @@ Future<void> setupLocator() async {
         () => LocalDataSourceImpl(),
   );
   injection.registerFactory(
-          () => HomeBloc(),);
+          () => HomeBloc(getAllNewsUsaCase: injection()),);
   injection.registerFactory(
         () => AuthBloc(getSignUpUseCase: injection(), getLoginUseCase: injection()),);
 
-  ///Use cases
-  injection.registerLazySingleton(() => GetLoginUseCase(injection()));
-  injection.registerLazySingleton(() => GetSignUpUseCase(injection()));
+
 }

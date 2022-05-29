@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/hive_flutter.dart';
 import 'app.dart';
 import 'flavors.dart';
 
@@ -8,5 +9,6 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.setupLocator();
   F.appFlavor = Flavor.DEV;
+  Hive.initFlutter();
   runApp(App());
 }

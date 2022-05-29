@@ -5,7 +5,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/services/dependency_injection.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/core/util/enums.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/request/sign_up_request_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_bloc.dart';
+import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_event.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_state.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
@@ -39,7 +41,11 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
         create: (_) => bloc,
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
-          listener: (_, state) {},
+          listener: (_, state) {
+            if(state is SignUpSuccessState){
+              Navigator.pushNamed(context, Routes.LOGIN_VIEW);
+            }
+          },
           child: Stack(
             alignment: Alignment.topCenter,
             children: [
@@ -56,7 +62,9 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
                 child: Text(
                   "Sign Up",
                   style: TextStyle(
-                      fontSize: 18.sp, color: AppColors.appColorWhite,fontWeight: FontWeight.bold),
+                      fontSize: 18.sp,
+                      color: AppColors.appColorWhite,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Positioned(
@@ -108,13 +116,24 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
                   ),
                 ),
               ),
-              Positioned(top: 420.h,child: AppButton(
-                width: 240.w,
-                buttonColor: AppColors.appColorWhite,
-                textColor: AppColors.colorPrimary,
-                buttonType: ButtonType.SOLID,
-                buttonText: 'Sign Up', onTapButton: () {},
-              ),),
+              Positioned(
+                top: 420.h,
+                child: AppButton(
+                  width: 240.w,
+                  buttonColor: AppColors.appColorWhite,
+                  textColor: AppColors.colorPrimary,
+                  buttonType: ButtonType.SOLID,
+                  buttonText: 'Sign Up',
+                  onTapButton: () {
+                    bloc.add(SignUpEvent(
+                        request: SignUpRequestEntity(
+                            firstName: _firstNameController.text,
+                            lastName: _lastNameController.text,
+                            email: _emailController.text,
+                            password: _passwordController.text)));
+                  },
+                ),
+              ),
               Positioned(
                 top: 550.h,
                 child: Text.rich(TextSpan(
@@ -124,11 +143,11 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(
-                                context, Routes.LOGIN_VIEW);
+                            Navigator.pushNamed(context, Routes.LOGIN_VIEW);
                           },
                         text: " Log In",
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14.sp),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.sp),
                       )
                     ])),
               ),
@@ -143,5 +162,4 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
   Base<BaseEvent, BaseState> getBloc() {
     return bloc;
   }
-
 }

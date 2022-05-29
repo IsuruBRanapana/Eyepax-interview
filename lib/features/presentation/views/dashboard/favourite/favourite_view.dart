@@ -43,7 +43,7 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
           SizedBox(
             height: 20.h,
           ),
-          NormalNewsTile(),
+          // NormalNewsTile(),
           SizedBox(
             height: 20.h,
           ),

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-28 17:52
 
 class NormalNewsTile extends StatefulWidget {
-  const NormalNewsTile({Key? key}) : super(key: key);
+  final Article news;
+  NormalNewsTile({Key? key, required this.news,}) : super(key: key);
 
   @override
   _NormalNewsTileState createState() => _NormalNewsTileState();
@@ -24,10 +26,9 @@ class _NormalNewsTileState extends State<NormalNewsTile> {
             Container(
               width: 270.w,
               height: 100.h,
-              child: Image.network(
-                'https://scx2.b-cdn.net/gfx/news/2022/elon-musk-has-clashed.jpg',
+              child: widget.news.urlToImage!=null?Image.network(widget.news.urlToImage!,
                 fit: BoxFit.cover,
-              ),
+              ):Image.network('https://scx2.b-cdn.net/gfx/news/2022/elon-musk-has-clashed.jpg',fit: BoxFit.cover,),
             ),
             Positioned(
                 top: 10.h,
@@ -39,7 +40,7 @@ class _NormalNewsTileState extends State<NormalNewsTile> {
                       Container(
                           width: 240.w,
                           child: Text(
-                            "by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Iuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana by Isuru Ranapana v",
+                            widget.news.description!,
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.sp,
@@ -60,13 +61,13 @@ class _NormalNewsTileState extends State<NormalNewsTile> {
                     child: Row(
                       children: [
                         Text(
-                          "by Isuru Ranapana",
+                          widget.news.author!,
                           style:
                               TextStyle(color: Colors.white, fontSize: 8.sp),
                         ),
                         const Expanded(child: SizedBox()),
                         Text(
-                          "Sunday, 29 May 2022",
+                          widget.news.publishedAt!.toIso8601String(),
                           style:
                           TextStyle(color: Colors.white, fontSize: 8.sp),
                         ),

@@ -6,6 +6,7 @@ import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/core/util/enums.dart';
 import 'package:news_app_eyepax_practical/core/util/navigation_routes.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/common/category.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_state.dart';
@@ -17,16 +18,21 @@ import 'package:news_app_eyepax_practical/features/presentation/common/opacity_t
 import 'package:news_app_eyepax_practical/features/presentation/views/base_view.dart';
 
 import '../../../bloc/home/home_bloc.dart';
+import '../../../bloc/home/home_event.dart';
 
 ///Created By Isuru B. Ranapana
 /// 2022-05-28 16:19
 
 class HomeView extends BaseView {
   final ScrollController controller;
+  final NewsResponse news;
+  final bool newsLoaded;
 
   HomeView({
     Key? key,
     required this.controller,
+    required this.news,
+    required this.newsLoaded,
   });
 
   @override
@@ -34,6 +40,11 @@ class HomeView extends BaseView {
 }
 
 class _HomeViewState extends BaseViewState<HomeView> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
   var bloc = injection<HomeBloc>();
   List<CategoryEntity> categories = [
     const CategoryEntity(name: "Health", id: 1),
@@ -129,45 +140,49 @@ class _HomeViewState extends BaseViewState<HomeView> {
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
-              itemBuilder: (context, index) => Container(
-                width: 65.w,
-                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
-                child: AppButton(
-                    buttonColor: selectedBtnIndex == categories[index].id
-                        ? AppColors.colorPrimary
-                        : AppColors.appColorWhite,
-                    textColor: selectedBtnIndex == categories[index].id
-                        ? AppColors.appColorWhite
-                        : AppColors.appColorBlack,
-                    isTextPadding: false,
-                    isTextBold: false,
-                    fontSize: 8.sp,
-                    width: 40.w,
-                    buttonText: categories[index].name,
-                    onTapButton: () {
-                      setState(() {
-                        selectedBtnIndex = categories[index].id;
-                      });
-                    }),
-              ),
+              itemBuilder: (context, index) =>
+                  Container(
+                    width: 65.w,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 2.w, vertical: 5.h),
+                    child: AppButton(
+                        buttonColor: selectedBtnIndex == categories[index].id
+                            ? AppColors.colorPrimary
+                            : AppColors.appColorWhite,
+                        textColor: selectedBtnIndex == categories[index].id
+                            ? AppColors.appColorWhite
+                            : AppColors.appColorBlack,
+                        isTextPadding: false,
+                        isTextBold: false,
+                        fontSize: 8.sp,
+                        width: 40.w,
+                        buttonText: categories[index].name,
+                        onTapButton: () {
+                          setState(() {
+                            selectedBtnIndex = categories[index].id;
+                          });
+                        }),
+                  ),
             ),
           ),
           SizedBox(
             height: 5.h,
           ),
-          Container(
+          widget.newsLoaded?Container(
             // width: 230.w,
-            height: 110.h * categories.length,
+            height: 110.h * widget.news.articles.length,
             child: ListView.builder(
               physics: const NeverScrollableScrollPhysics(),
-              itemCount: categories.length,
-              itemBuilder: (context, index) => Container(
-                width: 65.w,
-                padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
-                child: const NormalNewsTile(),
-              ),
+              itemCount: widget.news.articles.length,
+              itemBuilder: (context, index) =>
+                  Container(
+                    width: 65.w,
+                    padding: EdgeInsets.symmetric(
+                        horizontal: 2.w, vertical: 5.h),
+                    child: NormalNewsTile(news:widget.news.articles[index]),
+                  ),
             ),
-          ),
+          ):SizedBox(),
         ],
       ),
     );
