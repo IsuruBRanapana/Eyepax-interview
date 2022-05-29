@@ -95,7 +95,8 @@ lib folder structure
     - common
     - views
 
-#Conclusion
+# Conclusion
+
 Use Clean architecture to reduce code dependencies and encapsulate the business logic.
 
 
