@@ -4,11 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
+import 'package:news_app_eyepax_practical/core/util/navigation_routes.dart';
+import 'package:news_app_eyepax_practical/features/data/models/response/login_response_model.dart';
+import 'package:news_app_eyepax_practical/features/domain/entities/response/login_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_state.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/home/home_event.dart';
+import 'package:news_app_eyepax_practical/features/presentation/views/args/search_view_args.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/base_view.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/dashboard/favourite/favourite_view.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/dashboard/home/home_view.dart';
@@ -22,7 +26,8 @@ import '../../bloc/home/home_state.dart';
 /// 2022-05-28 16:16
 
 class DashboardView extends BaseView {
-  DashboardView({Key? key}) : super(key: key);
+  final LoginResponseEntity login;
+  DashboardView({Key? key,required this.login, }) : super(key: key);
 
   @override
   _DashboardViewState createState() => _DashboardViewState();
@@ -35,6 +40,7 @@ class _DashboardViewState extends BaseViewState<DashboardView>
   late NewsResponse normalNews;
   late NewsResponse topNews;
   bool newsLoaded = false;
+  var searchedText = '';
 
   late TabController tabController;
   final List<Color> colors = [
@@ -92,8 +98,9 @@ class _DashboardViewState extends BaseViewState<DashboardView>
               setState(() {
 
               });
-
-
+            }else if(state is GetSearchNewsSuccessState){
+              SearchViewArgs args = SearchViewArgs(news: state.responseEntity,searchedText:searchedText);
+              Navigator.pushNamed(context, Routes.SEARCH_VIEW,arguments: args);
             }
           },
           child: BottomBar(
@@ -130,9 +137,11 @@ class _DashboardViewState extends BaseViewState<DashboardView>
                 dragStartBehavior: DragStartBehavior.down,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  newsLoaded?HomeView(controller: controller,news: normalNews,newsLoaded: newsLoaded,topNews: topNews,):SizedBox(),
+                  newsLoaded?HomeView(controller: controller,news: normalNews,newsLoaded: newsLoaded,topNews: topNews, searchTitle: (value){
+                    searchedText = value;
+                  },):SizedBox(),
                   FavouriteView(controller: controller),
-                  ProfileView(controller: controller)
+                  ProfileView(controller: controller,loginResponse: widget.login,)
                 ]),
             child: TabBar(
               indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 40),

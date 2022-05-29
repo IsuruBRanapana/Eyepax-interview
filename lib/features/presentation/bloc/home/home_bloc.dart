@@ -11,12 +11,14 @@ import 'package:news_app_eyepax_practical/features/presentation/bloc/home/home_s
 
 import '../../../../core/error/failures.dart';
 import '../../../domain/usecases/get_all_news_use_case.dart';
+import '../../../domain/usecases/get_search_news_use_case.dart';
 import '../../../domain/usecases/get_top_news_use_case.dart';
 
 class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
-  HomeBloc({required this.getAllNewsUsaCase,required this.getTopNewsUsaCase, }) : super(InitialHomeState());
+  HomeBloc({required this.getAllNewsUsaCase,required this.getTopNewsUsaCase, required this.getSearchNewsUsaCase, }) : super(InitialHomeState());
   final GetAllNewsUsaCase getAllNewsUsaCase;
   final GetTopNewsUsaCase getTopNewsUsaCase;
+  final GetSearchNewsUseCase getSearchNewsUsaCase;
 
   @override
   Stream<BaseState<HomeState>> mapEventToState(
@@ -32,6 +34,12 @@ class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
       final failureOrSuccess =
       await getTopNewsUsaCase(NoParams());
       yield* _eitherFailureOrSuccessGetTopEvent(failureOrSuccess);
+    }
+    else if(event is GetSearchNewsEvent) {
+      yield APILoadingState();
+      final failureOrSuccess =
+      await getSearchNewsUsaCase(GetSearchNewsParameters(request: event.request));
+      yield* _eitherFailureOrSuccessGetSearchEvent(failureOrSuccess);
     }
   }
   Stream<BaseState<HomeState>> _eitherFailureOrSuccessGetAllEvent(
@@ -49,5 +57,13 @@ class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
             (success) => GetTopNewsSuccessState(success));
+  }
+  Stream<BaseState<HomeState>> _eitherFailureOrSuccessGetSearchEvent(
+      Either<Failure, NewsResponse> failureOrSuccess) async* {
+    yield failureOrSuccess.fold(
+            (failure) => APIFailureState(
+            errorResponseModel: ErrorResponse(
+                responseCode: "Failed", responseError: "ApI Failed")),
+            (success) => GetSearchNewsSuccessState(success));
   }
 }

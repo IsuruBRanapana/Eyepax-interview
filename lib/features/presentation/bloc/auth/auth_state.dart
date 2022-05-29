@@ -18,3 +18,8 @@ class SignUpSuccessState extends AuthState{
 
   SignUpSuccessState(this.responseEntity);
 }
+class GetLoggedUserSuccessState extends AuthState{
+  final LoginResponseEntity responseEntity;
+
+  GetLoggedUserSuccessState(this.responseEntity);
+}

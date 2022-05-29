@@ -38,53 +38,6 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
       child: ListView(
         controller: widget.controller,
         children: [
-          Text("Home"),
-          // LatestNewsTile(),
-          SizedBox(
-            height: 20.h,
-          ),
-          // NormalNewsTile(),
-          SizedBox(
-            height: 20.h,
-          ),
-          // DescriptionNewsTile(),
-          SizedBox(
-            height: 20.h,
-          ),
-          AppButton(
-            // width: 230.w,
-            // textRightPadding: 30.w,
-            buttonColor: AppColors.colorPrimary,
-            buttonType: ButtonType.SOLID,
-            buttonText: 'Test', onTapButton: () {},
-          ),
-          SizedBox(
-            height: 20.h,
-          ),
-          // Container(width: 180.w, child: OpacityTile()),
-          SizedBox(
-            height: 20.h,
-          ),
-          Container(
-            width: 230.w,
-            height: 20.h,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: numb.length,
-              itemBuilder: (context, index) => Container(
-                width: 45.w,
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                child: AppButton(
-                    buttonColor: AppColors.appColorWhite,
-                    textColor: AppColors.appColorBlack,
-                    isTextPadding: false,
-                    isTextBold: false,
-                    fontSize: 8.sp,
-                    width: 20.w,
-                    buttonText: numb[index].toString(), onTapButton: () {}),
-              ),
-            ),
-          ),
         ],
       ),
     );

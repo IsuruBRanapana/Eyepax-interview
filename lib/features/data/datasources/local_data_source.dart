@@ -17,34 +17,46 @@ abstract class LocalDataSource {
 
   Future<SignUpResponseModel> getSignUp(SignUpUserRequestModel request);
 
+  Future<LoginResponseModel> getLoggedUser();
 }
 
 class LocalDataSourceImpl implements LocalDataSource {
-
   @override
   Future<LoginResponseModel> getLogin(LoginRequestModel request) async {
     var box = await Hive.openBox('authBox');
-    try{
+    var loggedUserBox = await Hive.openBox('loggedUserBox');
+
+    try {
       final user = box.get(request.email);
-      if(user!=null){
-        if(user['email']==request.email&&user['password']==request.password){
-          return LoginResponseModel(success: "success");
-        }else{
+      if (user != null) {
+        if (user['email'] == request.email &&
+            user['password'] == request.password) {
+          await loggedUserBox.put(request.email, {
+            'email': request.email,
+            'password': request.password,
+            'firstname': user['firstname'],
+            'lastname': user['lastname']
+          });
+          return LoginResponseModel(
+              success: "success",
+              firstName: user['firstname'],
+              lastName: user['lastname'],
+              email: user['email']);
+        } else {
           return LoginResponseModel(success: "failed");
         }
-      }else{
+      } else {
         return LoginResponseModel(success: "failed");
       }
-    }on Exception{
+    } on Exception {
       rethrow;
     }
-
   }
 
   @override
   Future<SignUpResponseModel> getSignUp(SignUpUserRequestModel request) async {
     var box = await Hive.openBox('authBox');
-    try{
+    try {
       await box.put(request.email, {
         'email': request.email,
         'password': request.password,
@@ -52,10 +64,23 @@ class LocalDataSourceImpl implements LocalDataSource {
         'lastname': request.lastName
       });
       return SignUpResponseModel(success: "success");
-    }on Exception{
+    } on Exception {
       rethrow;
     }
-
   }
 
+  @override
+  Future<LoginResponseModel> getLoggedUser() async{
+    var loggedUserBox = await Hive.openBox('loggedUserBox');
+    try {
+      final user = loggedUserBox.getAt(0);
+      return LoginResponseModel(
+          success: "success",
+          firstName: user['firstname'],
+          lastName: user['lastname'],
+          email: user['email']);
+    } on Exception {
+      rethrow;
+    }
+  }
 }

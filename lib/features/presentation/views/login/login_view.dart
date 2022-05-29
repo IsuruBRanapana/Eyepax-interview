@@ -42,7 +42,7 @@ class _LoginViewState extends BaseViewState<LoginView> {
           listener: (_, state) {
             if(state is LoginSuccessState){
               if(state.responseEntity.success=='success'){
-                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW);
+                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,arguments: state.responseEntity);
               }
             }
           },

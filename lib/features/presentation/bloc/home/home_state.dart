@@ -16,3 +16,8 @@ class GetTopNewsSuccessState extends HomeState{
 
   GetTopNewsSuccessState(this.responseEntity);
 }
+class GetSearchNewsSuccessState extends HomeState{
+  final NewsResponse responseEntity;
+
+  GetSearchNewsSuccessState(this.responseEntity);
+}
