@@ -1,4 +1,3 @@
-
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/request/search_request.dart';

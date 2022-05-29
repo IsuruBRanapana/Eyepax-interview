@@ -25,4 +25,6 @@ abstract class Repository {
   Future<Either<Failure, NewsResponse>> getSearchNews(SearchRequest request);
 
   Future<Either<Failure, LoginResponseEntity>> getLoggedUser();
+
+  Future<Either<Failure, SignUpResponseEntity>> getLoggedOut();
 }

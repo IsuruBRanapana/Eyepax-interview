@@ -5,7 +5,6 @@ import 'package:flutter_floating_bottom_bar/flutter_floating_bottom_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
 import 'package:news_app_eyepax_practical/core/util/navigation_routes.dart';
-import 'package:news_app_eyepax_practical/features/data/models/response/login_response_model.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/response/login_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/response/news_response_entity.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.dart';
@@ -27,7 +26,11 @@ import '../../bloc/home/home_state.dart';
 
 class DashboardView extends BaseView {
   final LoginResponseEntity login;
-  DashboardView({Key? key,required this.login, }) : super(key: key);
+
+  DashboardView({
+    Key? key,
+    required this.login,
+  }) : super(key: key);
 
   @override
   _DashboardViewState createState() => _DashboardViewState();
@@ -88,19 +91,18 @@ class _DashboardViewState extends BaseViewState<DashboardView>
         child: BlocListener<HomeBloc, BaseState<HomeState>>(
           bloc: bloc,
           listener: (_, state) {
-            if(state is GetAllNewsSuccessState){
+            if (state is GetAllNewsSuccessState) {
               print(state.responseEntity.totalResults);
               normalNews = state.responseEntity;
               bloc.add(GetTopNewsEvent());
-            }else if(state is GetTopNewsSuccessState){
-              topNews=state.responseEntity;
+            } else if (state is GetTopNewsSuccessState) {
+              topNews = state.responseEntity;
               newsLoaded = true;
-              setState(() {
-
-              });
-            }else if(state is GetSearchNewsSuccessState){
-              SearchViewArgs args = SearchViewArgs(news: state.responseEntity,searchedText:searchedText);
-              Navigator.pushNamed(context, Routes.SEARCH_VIEW,arguments: args);
+              setState(() {});
+            } else if (state is GetSearchNewsSuccessState) {
+              SearchViewArgs args = SearchViewArgs(
+                  news: state.responseEntity, searchedText: searchedText);
+              Navigator.pushNamed(context, Routes.SEARCH_VIEW, arguments: args);
             }
           },
           child: BottomBar(
@@ -137,17 +139,29 @@ class _DashboardViewState extends BaseViewState<DashboardView>
                 dragStartBehavior: DragStartBehavior.down,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  newsLoaded?HomeView(controller: controller,news: normalNews,newsLoaded: newsLoaded,topNews: topNews, searchTitle: (value){
-                    searchedText = value;
-                  },):SizedBox(),
+                  newsLoaded
+                      ? HomeView(
+                          controller: controller,
+                          news: normalNews,
+                          newsLoaded: newsLoaded,
+                          topNews: topNews,
+                          searchTitle: (value) {
+                            searchedText = value;
+                          },
+                        )
+                      : SizedBox(),
                   FavouriteView(controller: controller),
-                  ProfileView(controller: controller,loginResponse: widget.login,)
+                  ProfileView(
+                    controller: controller,
+                    loginResponse: widget.login,
+                  )
                 ]),
             child: TabBar(
               indicatorPadding: const EdgeInsets.fromLTRB(6, 0, 6, 40),
               controller: tabController,
               indicator: const UnderlineTabIndicator(
-                  borderSide: BorderSide(color: AppColors.colorPrimary, width: 4),
+                  borderSide:
+                      BorderSide(color: AppColors.colorPrimary, width: 4),
                   insets: EdgeInsets.fromLTRB(16, 0, 16, 8)),
               tabs: [
                 SizedBox(

@@ -10,8 +10,7 @@ import '../../../core/usecase/usecase.dart';
 ///Created By Isuru B. Ranapana
 /// 2022-05-29 02:19
 
-class GetLoginUseCase
-    extends UseCase<LoginResponseEntity, GetLoginParameters> {
+class GetLoginUseCase extends UseCase<LoginResponseEntity, GetLoginParameters> {
   final Repository repository;
 
   GetLoginUseCase(this.repository);

@@ -40,9 +40,10 @@ class _LoginViewState extends BaseViewState<LoginView> {
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
           listener: (_, state) {
-            if(state is LoginSuccessState){
-              if(state.responseEntity.success=='success'){
-                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,arguments: state.responseEntity);
+            if (state is LoginSuccessState) {
+              if (state.responseEntity.success == 'success') {
+                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,
+                    arguments: state.responseEntity);
               }
             }
           },
@@ -62,7 +63,9 @@ class _LoginViewState extends BaseViewState<LoginView> {
                 child: Text(
                   "Log In",
                   style: TextStyle(
-                      fontSize: 18.sp, color: AppColors.appColorWhite,fontWeight: FontWeight.bold),
+                      fontSize: 18.sp,
+                      color: AppColors.appColorWhite,
+                      fontWeight: FontWeight.bold),
                 ),
               ),
               Positioned(
@@ -90,18 +93,25 @@ class _LoginViewState extends BaseViewState<LoginView> {
                   ),
                 ),
               ),
-              Positioned(top: 360.h,child: AppButton(
-                width: 240.w,
-                // textRightPadding: 30.w,
-                buttonColor: AppColors.appColorWhite,
-                textColor: AppColors.colorPrimary,
-                buttonType: ButtonType.SOLID,
-                buttonText: 'Login', onTapButton: () {
-                  bloc.add(LoginEvent(request: LoginRequestEntity(email: _emailController.text, password: _passwordController.text)));
-              },
-              ),),
               Positioned(
-                  top: 480.h,
+                top: 360.h,
+                child: AppButton(
+                  width: 240.w,
+                  // textRightPadding: 30.w,
+                  buttonColor: AppColors.appColorWhite,
+                  textColor: AppColors.colorPrimary,
+                  buttonType: ButtonType.SOLID,
+                  buttonText: 'Login',
+                  onTapButton: () {
+                    bloc.add(LoginEvent(
+                        request: LoginRequestEntity(
+                            email: _emailController.text,
+                            password: _passwordController.text)));
+                  },
+                ),
+              ),
+              Positioned(
+                top: 480.h,
                 child: Text.rich(TextSpan(
                     text: "Don't you have an account ?",
                     style: TextStyle(fontSize: 14.sp),
@@ -109,11 +119,11 @@ class _LoginViewState extends BaseViewState<LoginView> {
                       TextSpan(
                         recognizer: TapGestureRecognizer()
                           ..onTap = () {
-                            Navigator.pushNamed(
-                                context, Routes.SIGN_UP_VIEW);
+                            Navigator.pushNamed(context, Routes.SIGN_UP_VIEW);
                           },
                         text: " Sign Up",
-                        style: TextStyle(fontWeight: FontWeight.bold,fontSize: 14.sp),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 14.sp),
                       )
                     ])),
               ),

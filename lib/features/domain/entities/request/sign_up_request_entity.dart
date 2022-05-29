@@ -9,16 +9,15 @@ class SignUpRequestEntity extends SignUpUserRequestModel {
   final String firstName;
   final String lastName;
 
-
   SignUpRequestEntity({
     required this.firstName,
     required this.lastName,
     required this.email,
     required this.password,
   }) : super(
-      email: email,
-      password: password,
-      firstName: firstName,
-      lastName: lastName,
-    );
+          email: email,
+          password: password,
+          firstName: firstName,
+          lastName: lastName,
+        );
 }

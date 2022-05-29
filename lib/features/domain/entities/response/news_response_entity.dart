@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 ///Created By Isuru B. Ranapana
 /// 2022-05-29 10:37
 
-class NewsResponse extends Equatable{
+class NewsResponse extends Equatable {
   NewsResponse({
     required this.status,
     required this.totalResults,
@@ -15,11 +15,10 @@ class NewsResponse extends Equatable{
   List<Article> articles;
 
   @override
-  List<Object> get props => [status,totalResults,articles];
-
+  List<Object> get props => [status, totalResults, articles];
 }
 
-class Article extends Equatable{
+class Article extends Equatable {
   Article({
     this.source,
     this.author,
@@ -41,10 +40,19 @@ class Article extends Equatable{
   String? content;
 
   @override
-  List<Object> get props => [source!,author!,title!,description!,url!,urlToImage!,publishedAt!,content!];
+  List<Object> get props => [
+        source!,
+        author!,
+        title!,
+        description!,
+        url!,
+        urlToImage!,
+        publishedAt!,
+        content!
+      ];
 }
 
-class Source extends Equatable{
+class Source extends Equatable {
   Source({
     this.id,
     this.name,
@@ -54,5 +62,5 @@ class Source extends Equatable{
   String? name;
 
   @override
-  List<Object> get props => [id,name!];
+  List<Object> get props => [id, name!];
 }

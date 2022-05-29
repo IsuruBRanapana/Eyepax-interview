@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:news_app_eyepax_practical/core/services/dependency_injection.dart';
 import 'package:news_app_eyepax_practical/core/util/app_colors.dart';
-import 'package:news_app_eyepax_practical/core/util/enums.dart';
 import 'package:news_app_eyepax_practical/core/util/navigation_routes.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/common/category.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/request/search_request.dart';
@@ -13,10 +12,8 @@ import 'package:news_app_eyepax_practical/features/presentation/bloc/base_bloc.d
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_event.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/base_state.dart';
 import 'package:news_app_eyepax_practical/features/presentation/common/common_app_button.dart';
-import 'package:news_app_eyepax_practical/features/presentation/common/description_news_tile.dart';
 import 'package:news_app_eyepax_practical/features/presentation/common/latest_news_tile.dart';
 import 'package:news_app_eyepax_practical/features/presentation/common/normal_news_tile.dart';
-import 'package:news_app_eyepax_practical/features/presentation/common/opacity_tile.dart';
 import 'package:news_app_eyepax_practical/features/presentation/views/base_view.dart';
 
 import '../../../bloc/home/home_bloc.dart';

@@ -1,6 +1,5 @@
 import 'dart:async';
 
-import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:news_app_eyepax_practical/core/usecase/usecase.dart';
 import 'package:news_app_eyepax_practical/features/domain/entities/response/login_response_entity.dart';
@@ -15,14 +14,20 @@ import 'package:news_app_eyepax_practical/features/presentation/bloc/base_state.
 
 import '../../../../core/error/failures.dart';
 import '../../../domain/entities/common/error_response.dart';
+import '../../../domain/usecases/get_logged_out_use_case.dart';
 
 class AuthBloc extends Base<AuthEvent, BaseState<AuthState>> {
   final GetLoginUseCase getLoginUseCase;
   final GetSignUpUseCase getSignUpUseCase;
   final GetLoggedUserUseCase getLoggedUserUseCase;
+  final GetLoggedOutUseCase getLoggedOutUseCase;
 
-  AuthBloc({required this.getLoginUseCase, required this.getSignUpUseCase,required this.getLoggedUserUseCase,})
-      : super(AuthInitial());
+  AuthBloc({
+    required this.getLoginUseCase,
+    required this.getSignUpUseCase,
+    required this.getLoggedUserUseCase,
+    required this.getLoggedOutUseCase,
+  }) : super(AuthInitial());
 
   @override
   Stream<BaseState<AuthState>> mapEventToState(
@@ -38,11 +43,14 @@ class AuthBloc extends Base<AuthEvent, BaseState<AuthState>> {
       final failureOrSuccess =
           await getLoginUseCase(GetLoginParameters(request: event.request));
       yield* _eitherFailureOrSuccessLogin(failureOrSuccess);
-    }else if(event is GetLoggedUserEvent){
+    } else if (event is GetLoggedUserEvent) {
       yield APILoadingState();
-      final failureOrSuccess =
-      await getLoggedUserUseCase(NoParams());
+      final failureOrSuccess = await getLoggedUserUseCase(NoParams());
       yield* _eitherFailureOrSuccessLoggedUser(failureOrSuccess);
+    } else if (event is GetLoggedOutEvent) {
+      yield APILoadingState();
+      final failureOrSuccess = await getLoggedOutUseCase(NoParams());
+      yield* _eitherFailureOrSuccessLoggedOut(failureOrSuccess);
     }
   }
 
@@ -58,18 +66,27 @@ class AuthBloc extends Base<AuthEvent, BaseState<AuthState>> {
   Stream<BaseState<AuthState>> _eitherFailureOrSuccessLogin(
       Either<Failure, LoginResponseEntity> failureOrSuccess) async* {
     yield failureOrSuccess.fold(
-            (failure) => APIFailureState(
+        (failure) => APIFailureState(
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
-            (success) => LoginSuccessState(success));
+        (success) => LoginSuccessState(success));
   }
 
   Stream<BaseState<AuthState>> _eitherFailureOrSuccessLoggedUser(
       Either<Failure, LoginResponseEntity> failureOrSuccess) async* {
     yield failureOrSuccess.fold(
-            (failure) => APIFailureState(
+        (failure) => APIFailureState(
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
-            (success) => GetLoggedUserSuccessState(success));
+        (success) => GetLoggedUserSuccessState(success));
+  }
+
+  Stream<BaseState<AuthState>> _eitherFailureOrSuccessLoggedOut(
+      Either<Failure, SignUpResponseEntity> failureOrSuccess) async* {
+    yield failureOrSuccess.fold(
+        (failure) => APIFailureState(
+            errorResponseModel: ErrorResponse(
+                responseCode: "Failed", responseError: "ApI Failed")),
+        (success) => GetLoggedOutSuccessState(success));
   }
 }

@@ -9,8 +9,13 @@ class LoginResponseEntity extends Equatable {
   final String? lastName;
   final String? email;
 
-  LoginResponseEntity({required this.success,this.firstName, this.lastName, this.email, });
+  LoginResponseEntity({
+    required this.success,
+    this.firstName,
+    this.lastName,
+    this.email,
+  });
 
   @override
-  List<Object> get props => [success,firstName!,lastName!,email!];
+  List<Object> get props => [success, firstName!, lastName!, email!];
 }

@@ -8,15 +8,13 @@ import '../entities/response/login_response_entity.dart';
 ///Created By Isuru B. Ranapana
 /// 2022-05-29 15:39
 
-class GetLoggedUserUseCase
-    extends UseCase<LoginResponseEntity, NoParams> {
+class GetLoggedUserUseCase extends UseCase<LoginResponseEntity, NoParams> {
   final Repository repository;
 
   GetLoggedUserUseCase(this.repository);
 
   @override
-  Future<Either<Failure, LoginResponseEntity>> call(
-      NoParams params) async {
+  Future<Either<Failure, LoginResponseEntity>> call(NoParams params) async {
     return await repository.getLoggedUser();
   }
 }

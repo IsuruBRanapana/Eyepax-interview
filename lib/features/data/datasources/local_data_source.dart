@@ -2,7 +2,6 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:news_app_eyepax_practical/features/data/models/request/auth/sign_up_request_model.dart';
 import 'package:news_app_eyepax_practical/features/data/models/response/login_response_model.dart';
 import 'package:news_app_eyepax_practical/features/data/models/response/sign_up_response_model.dart';
-import 'package:path_provider/path_provider.dart';
 
 import '../models/request/auth/login_request_model.dart';
 
@@ -18,6 +17,8 @@ abstract class LocalDataSource {
   Future<SignUpResponseModel> getSignUp(SignUpUserRequestModel request);
 
   Future<LoginResponseModel> getLoggedUser();
+
+  Future<SignUpResponseModel> getLoggedOut();
 }
 
 class LocalDataSourceImpl implements LocalDataSource {
@@ -70,7 +71,7 @@ class LocalDataSourceImpl implements LocalDataSource {
   }
 
   @override
-  Future<LoginResponseModel> getLoggedUser() async{
+  Future<LoginResponseModel> getLoggedUser() async {
     var loggedUserBox = await Hive.openBox('loggedUserBox');
     try {
       final user = loggedUserBox.getAt(0);
@@ -79,6 +80,17 @@ class LocalDataSourceImpl implements LocalDataSource {
           firstName: user['firstname'],
           lastName: user['lastname'],
           email: user['email']);
+    } on Exception {
+      rethrow;
+    }
+  }
+
+  @override
+  Future<SignUpResponseModel> getLoggedOut() async {
+    var loggedUserBox = await Hive.openBox('loggedUserBox');
+    try {
+      await loggedUserBox.clear();
+      return SignUpResponseModel(success: "success");
     } on Exception {
       rethrow;
     }

@@ -6,17 +6,19 @@ abstract class HomeState extends BaseState<HomeState> {}
 
 class InitialHomeState extends HomeState {}
 
-class GetAllNewsSuccessState extends HomeState{
+class GetAllNewsSuccessState extends HomeState {
   final NewsResponse responseEntity;
 
   GetAllNewsSuccessState(this.responseEntity);
 }
-class GetTopNewsSuccessState extends HomeState{
+
+class GetTopNewsSuccessState extends HomeState {
   final NewsResponse responseEntity;
 
   GetTopNewsSuccessState(this.responseEntity);
 }
-class GetSearchNewsSuccessState extends HomeState{
+
+class GetSearchNewsSuccessState extends HomeState {
   final NewsResponse responseEntity;
 
   GetSearchNewsSuccessState(this.responseEntity);

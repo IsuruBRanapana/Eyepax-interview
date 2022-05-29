@@ -87,8 +87,7 @@ class ApiHelper {
     String queryString = Uri(queryParameters: queryParameters).query;
     try {
       String methodUrl = baseUrl + url + '?' + queryString;
-      print(methodUrl);
-      Response response = await dio.get('$methodUrl',
+      Response response = await dio.get(methodUrl,
           options: Options(headers: {
             HttpHeaders.contentTypeHeader: "application/json",
           }));

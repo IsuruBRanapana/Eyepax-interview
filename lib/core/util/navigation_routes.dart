@@ -32,13 +32,22 @@ class Routes {
             child: MyHomePage(), type: PageTransitionType.fade);
       case Routes.DASHBOARD_VIEW:
         return PageTransition(
-            child: DashboardView(login: settings.arguments as LoginResponseEntity,), type: PageTransitionType.fade);
+            child: DashboardView(
+              login: settings.arguments as LoginResponseEntity,
+            ),
+            type: PageTransitionType.fade);
       case Routes.SEE_ALL_LATEST_POSTS_VIEW:
         return PageTransition(
-            child: SeeAllLatestNewsPage(news: settings.arguments as NewsResponse,), type: PageTransitionType.fade);
+            child: SeeAllLatestNewsPage(
+              news: settings.arguments as NewsResponse,
+            ),
+            type: PageTransitionType.fade);
       case Routes.SINGLE_POST_VIEW:
         return PageTransition(
-            child: SinglePostViewPage(news: settings.arguments as Article,), type: PageTransitionType.fade);
+            child: SinglePostViewPage(
+              news: settings.arguments as Article,
+            ),
+            type: PageTransitionType.fade);
       case Routes.SPLASH_VIEW:
         return PageTransition(
             child: SplashView(), type: PageTransitionType.fade);
@@ -50,7 +59,10 @@ class Routes {
             child: SignUpView(), type: PageTransitionType.fade);
       case Routes.SEARCH_VIEW:
         return PageTransition(
-            child: SearchView(args: settings.arguments as SearchViewArgs,), type: PageTransitionType.fade);
+            child: SearchView(
+              args: settings.arguments as SearchViewArgs,
+            ),
+            type: PageTransitionType.fade);
 
       default:
         return MaterialPageRoute(

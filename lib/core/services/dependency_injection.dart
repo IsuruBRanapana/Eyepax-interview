@@ -8,6 +8,7 @@ import 'package:news_app_eyepax_practical/features/data/datasources/remote_data_
 import 'package:news_app_eyepax_practical/features/data/repositories/repository_impl.dart';
 import 'package:news_app_eyepax_practical/features/domain/repository/repository.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_all_news_use_case.dart';
+import 'package:news_app_eyepax_practical/features/domain/usecases/get_logged_out_use_case.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_logged_user_usecase.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_login_use_case.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_top_news_use_case.dart';
@@ -24,20 +25,19 @@ final injection = GetIt.instance;
 
 Future<void> setupLocator() async {
   injection.registerSingleton(Dio());
-  injection.registerLazySingleton<ApiHelper>(
-          () => ApiHelper());
+  injection.registerLazySingleton<ApiHelper>(() => ApiHelper());
   injection
       .registerLazySingleton<NetworkInfo>(() => NetworkInfoImpl(injection()));
-  injection
-      .registerLazySingleton(() => ConnectivityWrapper.instance);
+  injection.registerLazySingleton(() => ConnectivityWrapper.instance);
 
   ///Repository
   injection.registerLazySingleton<Repository>(
-        () => RepositoryImpl(
+    () => RepositoryImpl(
         remoteDataSource: injection(),
         localDataSource: injection(),
         networkInfo: injection()),
   );
+
   ///Use cases
   injection.registerLazySingleton(() => GetLoginUseCase(injection()));
   injection.registerLazySingleton(() => GetSignUpUseCase(injection()));
@@ -45,17 +45,26 @@ Future<void> setupLocator() async {
   injection.registerLazySingleton(() => GetTopNewsUsaCase(injection()));
   injection.registerLazySingleton(() => GetSearchNewsUseCase(injection()));
   injection.registerLazySingleton(() => GetLoggedUserUseCase(injection()));
+  injection.registerLazySingleton(() => GetLoggedOutUseCase(injection()));
+
   ///Data sources
   injection.registerLazySingleton<RemoteDataSource>(
-        () => RemoteDataSourceImpl(apiHelper: injection()),
+    () => RemoteDataSourceImpl(apiHelper: injection()),
   );
   injection.registerLazySingleton<LocalDataSource>(
-        () => LocalDataSourceImpl(),
+    () => LocalDataSourceImpl(),
   );
   injection.registerFactory(
-          () => HomeBloc(getAllNewsUsaCase: injection(),getTopNewsUsaCase: injection(),getSearchNewsUsaCase: injection()),);
+    () => HomeBloc(
+        getAllNewsUsaCase: injection(),
+        getTopNewsUsaCase: injection(),
+        getSearchNewsUsaCase: injection()),
+  );
   injection.registerFactory(
-        () => AuthBloc(getSignUpUseCase: injection(), getLoginUseCase: injection(),getLoggedUserUseCase: injection()),);
-
-
+    () => AuthBloc(
+        getSignUpUseCase: injection(),
+        getLoginUseCase: injection(),
+        getLoggedUserUseCase: injection(),
+        getLoggedOutUseCase: injection()),
+  );
 }

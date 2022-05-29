@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -40,17 +38,21 @@ class _SplashViewState extends BaseViewState<SplashView> {
         create: (_) => bloc,
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
-          listener: (_, state){
-            if(state is GetLoggedUserSuccessState){
-              if(state.responseEntity.success=='success'){
-                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,arguments: state.responseEntity);
+          listener: (_, state) {
+            if (state is GetLoggedUserSuccessState) {
+              if (state.responseEntity.success == 'success') {
+                Navigator.pushNamed(context, Routes.DASHBOARD_VIEW,
+                    arguments: state.responseEntity);
               }
-            }else{
+            } else {
               Navigator.pushNamed(context, Routes.LOGIN_VIEW);
             }
           },
           child: Center(
-            child: Text("NEWS",style: TextStyle(fontSize: 25.sp,color: AppColors.appColorWhite),),
+            child: Text(
+              "NEWS",
+              style: TextStyle(fontSize: 25.sp, color: AppColors.appColorWhite),
+            ),
           ),
         ),
       ),
@@ -59,8 +61,6 @@ class _SplashViewState extends BaseViewState<SplashView> {
 
   @override
   Base<BaseEvent, BaseState> getBloc() {
-  return bloc;
+    return bloc;
   }
-
-
 }

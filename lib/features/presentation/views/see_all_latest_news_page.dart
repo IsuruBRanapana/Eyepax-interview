@@ -15,7 +15,11 @@ import '../common/description_news_tile.dart';
 /// 2022-05-28 22:44
 
 class SeeAllLatestNewsPage extends BaseView {
-  SeeAllLatestNewsPage({Key? key,required this.news, });
+  SeeAllLatestNewsPage({
+    Key? key,
+    required this.news,
+  });
+
   final NewsResponse news;
 
   @override
@@ -73,7 +77,8 @@ class _SeeAllLatestNewsPageState extends BaseViewState<SeeAllLatestNewsPage> {
               height: 590.h,
               child: ListView.builder(
                 itemCount: widget.news.articles.length,
-                itemBuilder: (context, index) => DescriptionNewsTile(news:widget.news.articles[index]),
+                itemBuilder: (context, index) =>
+                    DescriptionNewsTile(news: widget.news.articles[index]),
               ),
             )
           ],

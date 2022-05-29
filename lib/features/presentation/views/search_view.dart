@@ -11,7 +11,6 @@ import '../../../core/services/dependency_injection.dart';
 import '../../../core/util/app_colors.dart';
 import '../../../core/util/navigation_routes.dart';
 import '../../domain/entities/common/category.dart';
-import '../../domain/entities/response/news_response_entity.dart';
 import '../bloc/home/home_bloc.dart';
 import 'base_view.dart';
 
@@ -35,7 +34,7 @@ class _SearchViewState extends BaseViewState<SearchView> {
 
   @override
   void initState() {
-    searchController.text= widget.args.searchedText;
+    searchController.text = widget.args.searchedText;
     super.initState();
   }
 
@@ -73,16 +72,16 @@ class _SearchViewState extends BaseViewState<SearchView> {
                       ),
                       controller: searchController,
                       decoration: InputDecoration(
-                          contentPadding: const EdgeInsets.all(16),
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(100),
-                            borderSide: BorderSide(
-                              width: 0,
-                              style: BorderStyle.none,
-                              color: AppColors.colorSecondary,
-                            ),
+                        contentPadding: const EdgeInsets.all(16),
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(100),
+                          borderSide: BorderSide(
+                            width: 0,
+                            style: BorderStyle.none,
+                            color: AppColors.colorSecondary,
                           ),
-                          filled: true,
+                        ),
+                        filled: true,
                       ),
                     ),
                   ),
@@ -92,7 +91,7 @@ class _SearchViewState extends BaseViewState<SearchView> {
                     // decoration: BoxDecoration(
                     //     color: AppColors.colorPrimary,
                     //     borderRadius: BorderRadius.circular(14.w)),
-                    child:                   InkResponse(
+                    child: InkResponse(
                       onTap: () {
                         Navigator.pop(context);
                       },
@@ -102,8 +101,7 @@ class _SearchViewState extends BaseViewState<SearchView> {
                         size: 15.w,
                       ),
                     ),
-                  )
-,
+                  ),
                   Expanded(child: SizedBox()),
                   Container(
                     height: 25.w,
@@ -170,8 +168,10 @@ class _SearchViewState extends BaseViewState<SearchView> {
                   },
                   child: Container(
                     width: 65.w,
-                    padding: EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
-                    child: NormalNewsTile(news: widget.args.news.articles[index]),
+                    padding:
+                        EdgeInsets.symmetric(horizontal: 2.w, vertical: 5.h),
+                    child:
+                        NormalNewsTile(news: widget.args.news.articles[index]),
                   ),
                 ),
               ),

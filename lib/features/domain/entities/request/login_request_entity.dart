@@ -7,13 +7,11 @@ class LoginRequestEntity extends LoginRequestModel {
   final String email;
   final String password;
 
-
-
   LoginRequestEntity({
     required this.email,
     required this.password,
   }) : super(
-    email: email,
-    password: password,
-  );
+          email: email,
+          password: password,
+        );
 }

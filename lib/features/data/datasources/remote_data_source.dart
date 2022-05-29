@@ -9,6 +9,7 @@ import '../../../core/configurations/network/network_config.dart';
 
 abstract class RemoteDataSource {
   Future<NewsResponseModel> getAllNews();
+
   Future<NewsResponseModel> getTopNews();
 
   Future<NewsResponseModel> getSearchNews(SearchRequest request);
@@ -33,13 +34,12 @@ class RemoteDataSourceImpl implements RemoteDataSource {
       rethrow;
     }
   }
+
   @override
   Future<NewsResponseModel> getTopNews() async {
     try {
-      final response = await apiHelper.getWithQParam('top-headlines', {
-        "country": "us",
-        "apiKey": NetworkConfig.APIKey
-      });
+      final response = await apiHelper.getWithQParam(
+          'top-headlines', {"country": "us", "apiKey": NetworkConfig.APIKey});
       return NewsResponseModel.fromJson(response.data);
     } on Exception {
       rethrow;
@@ -47,7 +47,7 @@ class RemoteDataSourceImpl implements RemoteDataSource {
   }
 
   @override
-  Future<NewsResponseModel> getSearchNews(SearchRequest request)async {
+  Future<NewsResponseModel> getSearchNews(SearchRequest request) async {
     try {
       final response = await apiHelper.getWithQParam('everything', {
         "q": request.searchTerm,

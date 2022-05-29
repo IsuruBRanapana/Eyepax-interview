@@ -64,6 +64,7 @@ class ArticleModel extends Article {
             urlToImage: urlToImage,
             publishedAt: publishedAt,
             content: content);
+
   factory ArticleModel.fromJson(Map<String, dynamic> json) =>
       _$ArticleModelFromJson(json);
 

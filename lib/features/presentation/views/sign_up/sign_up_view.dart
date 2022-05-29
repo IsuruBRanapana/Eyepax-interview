@@ -42,7 +42,7 @@ class _SignUpViewState extends BaseViewState<SignUpView> {
         child: BlocListener<AuthBloc, BaseState<AuthState>>(
           bloc: bloc,
           listener: (_, state) {
-            if(state is SignUpSuccessState){
+            if (state is SignUpSuccessState) {
               Navigator.pushNamed(context, Routes.LOGIN_VIEW);
             }
           },

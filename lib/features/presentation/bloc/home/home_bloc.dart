@@ -15,7 +15,11 @@ import '../../../domain/usecases/get_search_news_use_case.dart';
 import '../../../domain/usecases/get_top_news_use_case.dart';
 
 class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
-  HomeBloc({required this.getAllNewsUsaCase,required this.getTopNewsUsaCase, required this.getSearchNewsUsaCase, }) : super(InitialHomeState());
+  HomeBloc({
+    required this.getAllNewsUsaCase,
+    required this.getTopNewsUsaCase,
+    required this.getSearchNewsUsaCase,
+  }) : super(InitialHomeState());
   final GetAllNewsUsaCase getAllNewsUsaCase;
   final GetTopNewsUsaCase getTopNewsUsaCase;
   final GetSearchNewsUseCase getSearchNewsUsaCase;
@@ -26,44 +30,44 @@ class HomeBloc extends Base<HomeEvent, BaseState<HomeState>> {
   ) async* {
     if (event is GetAllNewsEvent) {
       yield APILoadingState();
-      final failureOrSuccess =
-      await getAllNewsUsaCase(NoParams());
+      final failureOrSuccess = await getAllNewsUsaCase(NoParams());
       yield* _eitherFailureOrSuccessGetAllEvent(failureOrSuccess);
-    }else if(event is GetTopNewsEvent) {
+    } else if (event is GetTopNewsEvent) {
       yield APILoadingState();
-      final failureOrSuccess =
-      await getTopNewsUsaCase(NoParams());
+      final failureOrSuccess = await getTopNewsUsaCase(NoParams());
       yield* _eitherFailureOrSuccessGetTopEvent(failureOrSuccess);
-    }
-    else if(event is GetSearchNewsEvent) {
+    } else if (event is GetSearchNewsEvent) {
       yield APILoadingState();
-      final failureOrSuccess =
-      await getSearchNewsUsaCase(GetSearchNewsParameters(request: event.request));
+      final failureOrSuccess = await getSearchNewsUsaCase(
+          GetSearchNewsParameters(request: event.request));
       yield* _eitherFailureOrSuccessGetSearchEvent(failureOrSuccess);
     }
   }
+
   Stream<BaseState<HomeState>> _eitherFailureOrSuccessGetAllEvent(
       Either<Failure, NewsResponse> failureOrSuccess) async* {
     yield failureOrSuccess.fold(
-            (failure) => APIFailureState(
+        (failure) => APIFailureState(
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
-            (success) => GetAllNewsSuccessState(success));
+        (success) => GetAllNewsSuccessState(success));
   }
+
   Stream<BaseState<HomeState>> _eitherFailureOrSuccessGetTopEvent(
       Either<Failure, NewsResponse> failureOrSuccess) async* {
     yield failureOrSuccess.fold(
-            (failure) => APIFailureState(
+        (failure) => APIFailureState(
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
-            (success) => GetTopNewsSuccessState(success));
+        (success) => GetTopNewsSuccessState(success));
   }
+
   Stream<BaseState<HomeState>> _eitherFailureOrSuccessGetSearchEvent(
       Either<Failure, NewsResponse> failureOrSuccess) async* {
     yield failureOrSuccess.fold(
-            (failure) => APIFailureState(
+        (failure) => APIFailureState(
             errorResponseModel: ErrorResponse(
                 responseCode: "Failed", responseError: "ApI Failed")),
-            (success) => GetSearchNewsSuccessState(success));
+        (success) => GetSearchNewsSuccessState(success));
   }
 }
