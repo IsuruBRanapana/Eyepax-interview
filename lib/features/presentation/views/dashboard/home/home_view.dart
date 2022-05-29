@@ -27,12 +27,14 @@ class HomeView extends BaseView {
   final ScrollController controller;
   final NewsResponse news;
   final bool newsLoaded;
+  final NewsResponse topNews;
 
   HomeView({
     Key? key,
     required this.controller,
     required this.news,
     required this.newsLoaded,
+    required this.topNews,
   });
 
   @override
@@ -120,13 +122,13 @@ class _HomeViewState extends BaseViewState<HomeView> {
                 viewportFraction: 0.8,
                 enlargeCenterPage: true,
                 enlargeStrategy: CenterPageEnlargeStrategy.values[0]),
-            items: [1, 2, 3, 4, 5].map((i) {
+            items: widget.topNews.articles.map((i) {
               return Builder(
                 builder: (BuildContext context) {
                   return InkWell(
                       onTap: () =>
                           Navigator.pushNamed(context, Routes.SINGLE_POST_VIEW),
-                      child: LatestNewsTile());
+                      child: LatestNewsTile(news: i,));
                 },
               );
             }).toList(),

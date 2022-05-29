@@ -8,6 +8,7 @@ import '../../../core/configurations/network/network_config.dart';
 
 abstract class RemoteDataSource {
   Future<NewsResponseModel> getAllNews();
+  Future<NewsResponseModel> getTopNews();
 }
 
 class RemoteDataSourceImpl implements RemoteDataSource {
@@ -22,6 +23,19 @@ class RemoteDataSourceImpl implements RemoteDataSource {
         "q": "tesla",
         "from": "2022-04-29",
         "sortBy": "publishedAt",
+        "apiKey": NetworkConfig.APIKey
+      });
+      return NewsResponseModel.fromJson(response.data);
+    } on Exception {
+      rethrow;
+    }
+  }
+  @override
+  Future<NewsResponseModel> getTopNews() async {
+    try {
+      final response = await apiHelper.getWithQParam('top-headlines', {
+        //todo: change country according to location
+        "country": "us",
         "apiKey": NetworkConfig.APIKey
       });
       return NewsResponseModel.fromJson(response.data);

@@ -9,6 +9,7 @@ import 'package:news_app_eyepax_practical/features/data/repositories/repository_
 import 'package:news_app_eyepax_practical/features/domain/repository/repository.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_all_news_use_case.dart';
 import 'package:news_app_eyepax_practical/features/domain/usecases/get_login_use_case.dart';
+import 'package:news_app_eyepax_practical/features/domain/usecases/get_top_news_use_case.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/auth/auth_bloc.dart';
 import 'package:news_app_eyepax_practical/features/presentation/bloc/home/home_bloc.dart';
 
@@ -39,6 +40,7 @@ Future<void> setupLocator() async {
   injection.registerLazySingleton(() => GetLoginUseCase(injection()));
   injection.registerLazySingleton(() => GetSignUpUseCase(injection()));
   injection.registerLazySingleton(() => GetAllNewsUsaCase(injection()));
+  injection.registerLazySingleton(() => GetTopNewsUsaCase(injection()));
   ///Data sources
   injection.registerLazySingleton<RemoteDataSource>(
         () => RemoteDataSourceImpl(apiHelper: injection()),
@@ -47,7 +49,7 @@ Future<void> setupLocator() async {
         () => LocalDataSourceImpl(),
   );
   injection.registerFactory(
-          () => HomeBloc(getAllNewsUsaCase: injection()),);
+          () => HomeBloc(getAllNewsUsaCase: injection(),getTopNewsUsaCase: injection()),);
   injection.registerFactory(
         () => AuthBloc(getSignUpUseCase: injection(), getLoginUseCase: injection()),);
 

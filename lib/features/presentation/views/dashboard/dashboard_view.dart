@@ -33,6 +33,7 @@ class _DashboardViewState extends BaseViewState<DashboardView>
   var bloc = injection<HomeBloc>();
   late int currentPage;
   late NewsResponse normalNews;
+  late NewsResponse topNews;
   bool newsLoaded = false;
 
   late TabController tabController;
@@ -84,11 +85,15 @@ class _DashboardViewState extends BaseViewState<DashboardView>
             if(state is GetAllNewsSuccessState){
               print(state.responseEntity.totalResults);
               normalNews = state.responseEntity;
+              bloc.add(GetTopNewsEvent());
+            }else if(state is GetTopNewsSuccessState){
+              topNews=state.responseEntity;
               newsLoaded = true;
               setState(() {
 
               });
-                // Navigator.pushNamed(context, Routes.DASHBOARD_VIEW);
+
+
             }
           },
           child: BottomBar(
@@ -125,7 +130,7 @@ class _DashboardViewState extends BaseViewState<DashboardView>
                 dragStartBehavior: DragStartBehavior.down,
                 physics: const BouncingScrollPhysics(),
                 children: [
-                  newsLoaded?HomeView(controller: controller,news: normalNews,newsLoaded: newsLoaded,):SizedBox(),
+                  newsLoaded?HomeView(controller: controller,news: normalNews,newsLoaded: newsLoaded,topNews: topNews,):SizedBox(),
                   FavouriteView(controller: controller),
                   ProfileView(controller: controller)
                 ]),

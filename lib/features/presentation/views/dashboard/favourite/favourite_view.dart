@@ -39,7 +39,7 @@ class _FavouriteViewState extends BaseViewState<FavouriteView> {
         controller: widget.controller,
         children: [
           Text("Home"),
-          LatestNewsTile(),
+          // LatestNewsTile(),
           SizedBox(
             height: 20.h,
           ),

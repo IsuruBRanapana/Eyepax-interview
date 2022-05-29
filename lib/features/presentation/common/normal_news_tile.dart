@@ -40,7 +40,7 @@ class _NormalNewsTileState extends State<NormalNewsTile> {
                       Container(
                           width: 240.w,
                           child: Text(
-                            widget.news.description!,
+                            widget.news.description!=null?widget.news.description!:"",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 12.sp,
@@ -61,13 +61,13 @@ class _NormalNewsTileState extends State<NormalNewsTile> {
                     child: Row(
                       children: [
                         Text(
-                          widget.news.author!,
+                          widget.news.author!=null?widget.news.author!:"",
                           style:
                               TextStyle(color: Colors.white, fontSize: 8.sp),
                         ),
                         const Expanded(child: SizedBox()),
                         Text(
-                          widget.news.publishedAt!.toIso8601String(),
+                            widget.news.publishedAt!=null?widget.news.publishedAt!.toIso8601String():"",
                           style:
                           TextStyle(color: Colors.white, fontSize: 8.sp),
                         ),

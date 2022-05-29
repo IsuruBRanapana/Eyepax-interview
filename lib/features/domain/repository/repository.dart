@@ -14,4 +14,5 @@ abstract class Repository {
   Future<Either<Failure, SignUpResponseEntity>> getSignUp(SignUpRequestEntity request);
   Future<Either<Failure, LoginResponseEntity>> getLogIn(LoginRequestEntity request);
   Future<Either<Failure, NewsResponse>> getAllNews();
+  Future<Either<Failure, NewsResponse>> getTopNews();
 }

@@ -100,4 +100,28 @@ class RepositoryImpl implements Repository {
     }
   }
 
+
+  @override
+  Future<Either<Failure, NewsResponse>> getTopNews() async{
+    if(await networkInfo.isConnected){
+      try{
+        final response = await remoteDataSource.getTopNews();
+        print(response.totalResults);
+        return Right(response);
+      }on ServerException catch (ex) {
+        return Left(ServerFailure(ex.errorResponseModel));
+      } on UnAuthorizedException catch (ex) {
+        return Left(AuthorizedFailure(ex.errorResponseModel));
+      } on DioException catch (e) {
+        return Left(ServerFailure(e.errorResponseModel));
+      } on Exception {
+        return Left(ServerFailure(ErrorResponseModel(
+            responseError:
+            ErrorMessages.SOMETHING_WRONG)));
+      }
+    }else{
+      return Left(ConnectionFailure());
+    }
+  }
+
 }
